@@ -1,0 +1,38 @@
+Aditya Verma YT Stack Playlist. 
+Stock Span Problem= Largest greater to left
+
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> stockSpan(vector<int>a){
+    stack<pair<int,int>>s;
+    vector<int>res;
+    for(int i=0;i<a.size();i++){
+        if(s.size()==0) res.push_back(-1);
+        else if(s.size()>0 && s.top().first>a[i]) res.push_back(s.top().second);
+        else if(s.size()>0 && s.top().first<=a[i]){
+            while(s.size() && s.top().first<=a[i]){
+                s.pop();
+            }
+            if(s.size()==0) res.push_back(-1);
+            else res.push_back(s.top().second);
+        }
+        s.push({a[i],i});
+    }
+    for(int i=0;i<res.size();i++){
+        res[i]=i-res[i];
+    }
+    return res;
+}
+int main() {
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    vector<int>ans=stockSpan(a);
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+	return 0;
+}
